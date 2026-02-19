@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0a0a">
+<meta name="color-scheme" content="dark">
+<title>Plan d'Action Personnalisé — Valentin</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --border: rgba(255,255,255,0.07);
+    --gold: #c9a84c;
+    --gold2: #e8c97a;
+    --text: #e8e4dd;
+    --muted: #7a7570;
+    --accent: rgba(201,168,76,0.12);
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; background-color: #0a0a0a; }
+
+  body {
+    background-color: #0a0a0a; color: var(--text);
+    font-family: 'DM Sans', sans-serif; font-weight: 300;
+    line-height: 1.7; overflow-x: hidden; -webkit-tap-highlight-color: transparent;
+  }
+
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9999; opacity: 0.4;
+  }
+
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column;
+    justify-content: center; padding: 80px 24px 60px;
+    position: relative; overflow: hidden; background-color: #0a0a0a;
+  }
+
+  .hero::before {
+    content: ''; position: absolute; top: -20%; right: -10%;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-label { font-size: 11px; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 32px; opacity: 0; animation: fadeUp 0.8s ease forwards 0.2s; }
+  .hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(48px, 10vw, 88px); font-weight: 300; line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 8px; opacity: 0; animation: fadeUp 0.8s ease forwards 0.4s; }
+  .hero-title em { font-style: italic; color: var(--gold); }
+  .hero-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(48px, 10vw, 88px); font-weight: 600; line-height: 1.05; letter-spacing: -0.02em; color: var(--gold2); margin-bottom: 40px; opacity: 0; animation: fadeUp 0.8s ease forwards 0.5s; }
+  .hero-sub { font-size: 15px; color: var(--muted); max-width: 480px; line-height: 1.8; border-left: 1px solid var(--gold); padding-left: 20px; opacity: 0; animation: fadeUp 0.8s ease forwards 0.7s; }
+  .hero-date { margin-top: 48px; font-size: 11px; letter-spacing: 0.15em; color: var(--muted); text-transform: uppercase; opacity: 0; animation: fadeUp 0.8s ease forwards 0.9s; }
+
+  .scroll-hint { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; opacity: 0; animation: fadeUp 0.8s ease forwards 1.2s; }
+  .scroll-hint span { font-size: 10px; letter-spacing: 0.2em; color: var(--muted); text-transform: uppercase; }
+  .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--gold), transparent); animation: scrollLine 2s ease-in-out infinite; }
+
+  @keyframes scrollLine { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+  section { padding: 80px 24px; max-width: 720px; margin: 0 auto; background-color: #0a0a0a; }
+
+  .section-label { font-size: 10px; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 5vw, 42px); font-weight: 300; line-height: 1.2; margin-bottom: 40px; letter-spacing: -0.01em; }
+  .section-title em { font-style: italic; color: var(--gold); }
+
+  .divider { width: 100%; height: 1px; background-color: rgba(255,255,255,0.07); }
+
+  .bilan-grid { display: grid; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .bilan-item { background-color: #111111; padding: 24px; transition: background 0.3s; }
+  .bilan-item:hover { background-color: #161616; }
+  .bilan-item .label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+  .bilan-item p { font-size: 14px; color: var(--text); line-height: 1.7; opacity: 0.85; }
+
+  .obstacles-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); }
+  .obstacle { background-color: #111111; padding: 28px 24px; display: grid; grid-template-columns: 48px 1fr; gap: 20px; align-items: start; transition: background 0.3s; cursor: default; }
+  .obstacle:hover { background-color: #161616; }
+  .obstacle-num { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 300; color: rgba(201,168,76,0.25); line-height: 1; padding-top: 2px; transition: color 0.3s; }
+  .obstacle:hover .obstacle-num { color: var(--gold); }
+  .obstacle-title { font-size: 13px; font-weight: 500; letter-spacing: 0.05em; margin-bottom: 8px; color: var(--text); }
+  .obstacle-desc { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+  .axes-grid { display: flex; flex-direction: column; gap: 16px; }
+  .axe-card { border: 1px solid var(--border); background-color: #111111; padding: 28px; position: relative; overflow: hidden; transition: border-color 0.3s, background 0.3s; }
+  .axe-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--gold); transform: scaleY(0); transform-origin: bottom; transition: transform 0.4s ease; }
+  .axe-card:hover { border-color: rgba(201,168,76,0.3); background-color: #161616; }
+  .axe-card:hover::before { transform: scaleY(1); }
+  .axe-num { font-size: 10px; letter-spacing: 0.3em; color: var(--gold); text-transform: uppercase; margin-bottom: 10px; }
+  .axe-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 400; margin-bottom: 16px; line-height: 1.3; }
+  .axe-body { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+  .plan-steps { display: flex; flex-direction: column; }
+  .plan-step { padding: 24px 0; border-bottom: 1px solid var(--border); }
+  .plan-step:last-child { border-bottom: none; }
+  .step-header { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 10px; }
+  .step-icon { width: 36px; height: 36px; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 14px; }
+  .step-title { font-size: 14px; font-weight: 500; padding-top: 8px; }
+  .step-body { font-size: 13px; color: var(--muted); line-height: 1.7; padding-left: 52px; }
+  .step-tag { display: inline-block; margin-left: 52px; margin-top: 8px; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); background: var(--accent); padding: 4px 10px; }
+
+  .diff-section { background-color: #111111; padding: 80px 24px; }
+  .diff-inner { max-width: 720px; margin: 0 auto; background-color: #111111; }
+  .diff-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); margin-top: 40px; }
+  .diff-item { background-color: #161616; padding: 24px 20px; }
+  .diff-item-title { font-size: 12px; font-weight: 500; color: var(--gold2); margin-bottom: 8px; letter-spacing: 0.05em; }
+  .diff-item p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  .next-section { padding: 100px 24px; text-align: center; max-width: 600px; margin: 0 auto; }
+  .next-icon { width: 64px; height: 64px; border: 1px solid rgba(201,168,76,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 32px; font-size: 22px; }
+  .next-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 5vw, 40px); font-weight: 300; margin-bottom: 24px; line-height: 1.2; }
+  .next-body { font-size: 14px; color: var(--muted); line-height: 1.8; margin-bottom: 40px; }
+  .next-box { border: 1px solid rgba(201,168,76,0.2); background-color: rgba(201,168,76,0.08); padding: 28px; text-align: left; font-size: 14px; line-height: 1.7; color: var(--text); opacity: 0.9; }
+
+  footer { background-color: #0a0a0a; border-top: 1px solid var(--border); padding: 40px 24px; text-align: center; font-size: 11px; letter-spacing: 0.1em; color: var(--muted); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 600px) {
+    html, body { background-color: #0a0a0a; }
+    section { padding: 60px 20px; background-color: #0a0a0a; }
+    .hero { padding: 100px 20px 60px; background-color: #0a0a0a; }
+    .diff-section { padding: 60px 20px; background-color: #111111; }
+    .diff-inner { background-color: #111111; }
+    .diff-grid { grid-template-columns: 1fr; }
+    .diff-item { background-color: #161616; }
+    .axe-card { padding: 22px 18px; background-color: #111111; }
+    .bilan-item { padding: 20px 18px; background-color: #111111; }
+    .obstacle { padding: 22px 18px; grid-template-columns: 36px 1fr; gap: 14px; background-color: #111111; }
+    .obstacle-num { font-size: 28px; }
+    .step-body { padding-left: 0; margin-top: 8px; }
+    .step-tag { margin-left: 0; }
+    .plan-step { padding: 20px 0; }
+    .next-section { padding: 70px 20px; background-color: #0a0a0a; }
+    .next-box { padding: 22px 18px; }
+    footer { background-color: #0a0a0a; }
+  }
+
+  @media (prefers-color-scheme: dark) { html, body { background-color: #0a0a0a; } }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-label">Bilan · Appel R1 · 19 Février 2025</div>
+  <div class="hero-title">Plan d'action <em>personnalisé</em></div>
+  <div class="hero-name">Valentin</div>
+  <p class="hero-sub">Basé sur notre échange de ce soir. Ce document explique pourquoi tu stagnes depuis décembre — et ce qu'il faut changer.</p>
+  <div class="hero-date">Confidentiel · Document personnalisé</div>
+  <div class="scroll-hint"><span>Explorer</span><div class="scroll-line"></div></div>
+</div>
+
+<div class="divider"></div>
+
+<!-- 01 — CE QUI SE PASSE -->
+<section class="reveal">
+  <div class="section-label">01 — Diagnostic</div>
+  <h2 class="section-title">Pourquoi tu <em>stagnes</em> depuis décembre</h2>
+
+  <div class="bilan-grid">
+    <div class="bilan-item">
+      <div class="label">Le vrai problème</div>
+      <p>Tu fais les mêmes efforts qu'en septembre-novembre — mais les résultats se sont arrêtés. Ce n'est pas un problème de motivation. C'est que ton corps a reçu un signal au départ, et qu'il ne le reçoit plus. Quelque chose dans la méthode doit changer.</p>
+    </div>
+    <div class="bilan-item">
+      <div class="label">Ce qui s'est probablement passé</div>
+      <p>En cherchant à perdre du gras, tu as probablement trop restreint les calories à un moment. Résultat : ton métabolisme a ralenti pour se protéger. La perte de gras s'arrête, et le corps refuse de progresser. Manger plus — de façon structurée — peut suffire à relancer la machine.</p>
+    </div>
+    <div class="bilan-item">
+      <div class="label">Ce qui n'a pas aidé</div>
+      <p>L'expérience Herbalife t'a donné des conseils génériques sans suivi. Tu n'as jamais eu de méthode précise pour savoir ce qui fonctionne sur toi — et donc impossible d'identifier ce qui bloque.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 02 — LES FREINS -->
+<section class="reveal">
+  <div class="section-label">02 — Les freins</div>
+  <h2 class="section-title">Ce qui <em>bloque</em> les résultats</h2>
+
+  <div class="obstacles-list">
+
+    <div class="obstacle">
+      <div class="obstacle-num">1</div>
+      <div>
+        <div class="obstacle-title">Pas de repères caloriques précis</div>
+        <p class="obstacle-desc">Manger sain ne suffit pas pour perdre du gras. C'est le déficit calorique — calibré sur ton profil, ta dépense réelle — qui déclenche la perte. Sans ce chiffre, tu avances à l'aveugle : parfois trop bas, parfois sans déficit. Les deux produisent la même stagnation.</p>
+      </div>
+    </div>
+
+    <div class="obstacle">
+      <div class="obstacle-num">2</div>
+      <div>
+        <div class="obstacle-title">Un entraînement qui ne progresse plus</div>
+        <p class="obstacle-desc">Le corps s'adapte rapidement. Si les séances restent les mêmes — mêmes charges, même structure — il n'a aucune raison de continuer à changer. La progression mesurable en charge d'une séance à l'autre est ce qui force le corps à évoluer.</p>
+      </div>
+    </div>
+
+    <div class="obstacle">
+      <div class="obstacle-num">3</div>
+      <div>
+        <div class="obstacle-title">Aucun outil pour lire ce qui se passe</div>
+        <p class="obstacle-desc">Tu ne sais pas ce qui t'a fait progresser en septembre, ni ce qui a causé le blocage en décembre. Sans indicateurs précis, il est impossible de corriger au bon moment — et la stagnation s'installe en silence.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 03 — LES LEVIERS -->
+<section class="reveal">
+  <div class="section-label">03 — Les leviers</div>
+  <h2 class="section-title">Ce qu'il faut <em>activer</em></h2>
+
+  <div class="axes-grid">
+
+    <div class="axe-card">
+      <div class="axe-num">Levier 01</div>
+      <div class="axe-title">Trouver ton vrai maintien calorique</div>
+      <div class="axe-body">C'est la base de tout. À partir de là, on construit un déficit contrôlé — ni trop bas pour ne pas bloquer le métabolisme, ni insuffisant pour ne pas perdre de gras. Ce chiffre est propre à toi et doit s'ajuster selon ta réponse réelle semaine après semaine.</div>
+    </div>
+
+    <div class="axe-card">
+      <div class="axe-num">Levier 02</div>
+      <div class="axe-title">Remettre de la progression dans les séances</div>
+      <div class="axe-body">Noter les charges à chaque séance et progresser, même légèrement, d'une semaine à l'autre. C'est ce signal de progression qui oblige le corps à construire du muscle — et qui, combiné au déficit calorique, produit la recomposition que tu cherches.</div>
+    </div>
+
+    <div class="axe-card">
+      <div class="axe-num">Levier 03</div>
+      <div class="axe-title">Suivre le poids par moyenne hebdomadaire</div>
+      <div class="axe-body">Te peser chaque matin à jeun, calculer la moyenne de la semaine. C'est cette valeur — pas les fluctuations journalières — qui te dit si tu es sur la bonne trajectoire. Avec ça, tu sais exactement quand ajuster et dans quel sens.</div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 04 — PLAN D'ACTION -->
+<section class="reveal">
+  <div class="section-label">04 — Actions</div>
+  <h2 class="section-title">Par où <em>commencer</em></h2>
+
+  <div class="plan-steps">
+
+    <div class="plan-step">
+      <div class="step-header">
+        <div class="step-icon">📊</div>
+        <div class="step-title">Calculer ton maintien calorique réel</div>
+      </div>
+      <div class="step-body">Première priorité. Sans ce chiffre, tout le reste repose sur des suppositions. C'est lui qui détermine le déficit à appliquer pour perdre du gras sans bloquer le métabolisme.</div>
+      <div class="step-tag">Priorité n°1</div>
+    </div>
+
+    <div class="plan-step">
+      <div class="step-header">
+        <div class="step-icon">🔄</div>
+        <div class="step-title">Mettre en place le suivi du poids hebdomadaire</div>
+      </div>
+      <div class="step-body">Poids chaque matin à jeun → moyenne de la semaine. Cette moyenne est l'indicateur fiable. Elle te dira dans les 2-3 semaines si le déficit est bien calibré ou s'il faut ajuster.</div>
+      <div class="step-tag">Suivi hebdomadaire</div>
+    </div>
+
+    <div class="plan-step">
+      <div class="step-header">
+        <div class="step-icon">📈</div>
+        <div class="step-title">Introduire une progression mesurable en séance</div>
+      </div>
+      <div class="step-body">Une séance sans note de tes charges, c'est une séance dont tu ne peux pas tirer de leçon. Objectif : progresser sur au moins un exercice par semaine. C'est ce signal qui force le corps à s'adapter.</div>
+      <div class="step-tag">Ajustement continu</div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 05 — LONG TERME -->
+<div class="diff-section reveal">
+  <div class="diff-inner">
+    <div class="section-label">05 — Ce qui change tout</div>
+    <h2 class="section-title">Effort + <em>méthode</em></h2>
+    <p style="font-size:14px; color: var(--muted); max-width: 560px; line-height: 1.8; margin-bottom: 0;">Tu n'as pas manqué de travail. Tu as manqué d'un système qui interprète ce que ton corps fait — et qui s'ajuste en conséquence.</p>
+
+    <div class="diff-grid">
+      <div class="diff-item">
+        <div class="diff-item-title">Manger sain ≠ perdre du gras</div>
+        <p>La qualité des aliments compte. Mais sans déficit calorique précis, la perte de gras ne se déclenche pas — quel que soit ce que tu manges.</p>
+      </div>
+      <div class="diff-item">
+        <div class="diff-item-title">La stagnation s'explique toujours</div>
+        <p>Ce n'est jamais « ça ne marche pas pour moi ». C'est une variable mal réglée. Il faut savoir laquelle — et la corriger dans le bon ordre.</p>
+      </div>
+      <div class="diff-item">
+        <div class="diff-item-title">Corriger tôt, pas après 3 mois</div>
+        <p>Avec un suivi hebdomadaire, un ralentissement se détecte en 2 semaines. Sans suivi, tu te retrouves bloqué depuis décembre sans comprendre pourquoi.</p>
+      </div>
+      <div class="diff-item">
+        <div class="diff-item-title">Les 3 leviers ensemble</div>
+        <p>Nutrition, entraînement, suivi — les trois doivent être alignés. Optimiser l'un sans les autres explique exactement pourquoi les progrès se sont arrêtés.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- PROCHAINE ÉTAPE -->
+<div style="background-color: #0a0a0a;">
+  <div class="next-section reveal">
+    <div class="next-icon">→</div>
+    <h2 class="next-title">La suite</h2>
+    <p class="next-body">Ce plan te dit où est le problème. Demain, on creuse exactement ce que tu mets en place pour définir ce qui doit changer en premier — et construire quelque chose de précis pour toi.</p>
+
+    <div class="next-box">
+      <strong style="color: var(--gold2); font-size: 13px; letter-spacing: 0.05em; display: block; margin-bottom: 12px;">Ce qu'on va faire lors de notre prochain échange</strong>
+      Rentrer dans le concret : ce que tu manges vraiment, comment tes séances sont structurées, et identifier précisément pourquoi décembre a été le point de bascule. À partir de là, un plan calibré sur ta réalité — pas des conseils génériques.
+    </div>
+  </div>
+</div>
+
+<footer>
+  Plan élaboré sur la base de l'échange du 19 février 2025 · Valentin · Document confidentiel
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
